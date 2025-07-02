@@ -5,10 +5,10 @@
   "scripts": {
     "build": "tsc && chmod 755 build/index.js"
   },
-  "keywords": [],
+  "keywords": ["mcp", "tickets", "late-night", "calendar", "television"],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "A Model Context Protocol (MCP) server that provides real-time information on show ticket availability and guest lineups for popular late night television shows, with calendar integration.",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.13.2",
     "axios": "^1.7.9",
@@ -25,7 +25,7 @@
   },
   "type": "module",
   "bin": {
-    "weather": "./build/index.js"
+    "late-night-tickets-mcp": "./build/index.js"
   },
   "files": [
     "build"

@@ -9,6 +9,8 @@ import { getTicketSummary, Ticket, TicketSummary } from './ticket-scraper.js';
 import { fetchGuestLineups, ShowGuestSchedule } from './guest-scraper.js';
 // Import schemas from mcpSchemas
 import { ticketSummaryOutputSchema, showGuestScheduleSchema } from './mcp-schemas.js';
+// Import calendar tool
+import { registerCalendarTool } from './calendar-tool.js';
 
 
 // --- MCP Server Setup ---
@@ -103,6 +105,9 @@ server.registerTool(
     }
   }
 );
+
+// --- Register Calendar Tool ---
+registerCalendarTool(server);
 
 // --- Main execution function ---
 async function main() {

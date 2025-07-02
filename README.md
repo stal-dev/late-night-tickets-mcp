@@ -32,9 +32,10 @@ The server implements the Model Context Protocol (MCP) standard, making it compa
 
 ### 🔧 MCP Integration
 - Implements Model Context Protocol (MCP) standard
-- Provides two main tools:
+- Provides three main tools:
   - `getAvailableShows`: Retrieve ticket availability
   - `getGuestLineups`: Retrieve guest lineups
+  - `addShowToCalendar`: Create calendar events for shows
 - Uses stdio transport for easy integration
 
 ## Installation
@@ -140,6 +141,30 @@ Retrieves guest lineups for late night shows.
 }
 ```
 
+#### `addShowToCalendar`
+
+Creates a calendar event for a late night show with iCal format data.
+
+**Parameters:**
+- `showName`: String - The name of the show (e.g., 'The Daily Show', 'The Tonight Show')
+- `date`: String - The date of the show in a parseable format (e.g., '2025-07-15', 'July 15, 2025')
+- `time`: String - The time of the show (e.g., '4:30 PM ET', '3:15 PM PT')
+- `location`: String - The location of the show (e.g., 'New York City, NY', 'Los Angeles, CA')
+
+**Returns:**
+```json
+{
+  "event": {
+    "summary": "The Daily Show",
+    "description": "Attending The Daily Show taping.\n\nLocation: New York City, NY\nTime: 4:30 PM ET\n\nDon't forget to arrive early for check-in!",
+    "location": "New York City, NY",
+    "startTime": "2025-07-15T20:30:00.000Z",
+    "endTime": "2025-07-15T21:30:00.000Z",
+    "iCalData": "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Late Night Tickets MCP//Calendar Event//EN\nBEGIN:VEVENT\nUID:show-1734567890-abc123def\nDTSTAMP:20250101T120000Z\nDTSTART:20250715T203000Z\nDTEND:20250715T213000Z\nSUMMARY:The Daily Show\nDESCRIPTION:Attending The Daily Show taping.\\n\\nLocation: New York City, NY\\nTime: 4:30 PM ET\\n\\nDon't forget to arrive early for check-in!\nLOCATION:New York City, NY\nSTATUS:CONFIRMED\nSEQUENCE:0\nEND:VEVENT\nEND:VCALENDAR"
+  }
+}
+```
+
 ## Configuration
 
 ### Adding New Shows
@@ -189,6 +214,87 @@ src/
 ├── guest-scraper.ts  # Guest lineup scraper
 ├── config.ts         # Show configurations
 └── mcp-schemas.ts    # MCP tool schemas
+```
+
+## Usage Examples
+
+### Example 1: Finding Daily Show Opportunities
+**User Query:** "When is the next opportunity for me to attend the Daily show?"
+
+**Response:**
+```
+Great news! I found several upcoming Daily Show tapings with available tickets. Here are your next opportunities to attend The Daily Show:
+
+Upcoming Daily Show Tapings:
+- Tuesday, July 15, 2025 at 4:30 PM ET in New York City
+- Wednesday, July 16, 2025 at 4:30 PM ET in New York City
+- Thursday, July 17, 2025 at 4:30 PM ET in New York City
+- Tuesday, July 22, 2025 at 4:30 PM ET in New York City
+
+The earliest opportunity is next Tuesday, July 15th - just two weeks away! All of these tapings are filmed at The Daily Show's studio in New York City, and tickets are currently showing as available.
+```
+
+### Example 2: Finding Guest Appearances
+**User Query:** "When is the next time I can see Conan O'Brien?"
+
+**Response:**
+```
+Based on the guest lineup, Conan O'Brien will be appearing on Late Night with Seth Meyers on Monday, July 7th. The show typically airs at 12:35 AM ET on NBC (so technically early Tuesday morning, July 8th).
+This appears to be a repeat episode from June 11, 2025, but it's your next opportunity to see Conan on late night TV!
+```
+
+### Example 3: This Week's Available Shows
+**User Query:** "Which show can I see this week?"
+
+**Response:**
+```
+Looking at this week's schedule (July 1-6, 2025), I don't see any Daily Show tapings available. The earliest Daily Show taping with available tickets is next Tuesday, July 15th.
+
+However, if you're interested in attending other late-night shows this week, I can see there are some available:
+
+This Week's Available Shows:
+- Monday, July 7th: Jimmy Kimmel Live at 3:15 PM PT (Los Angeles)
+- Tuesday, July 8th: Jimmy Kimmel Live at 3:15 PM PT (Los Angeles)
+- Wednesday, July 9th: The View at 9:30 AM ET (NYC) and Jimmy Kimmel Live at 3:15 PM PT (LA)
+- Thursday, July 10th: The View at 9:30 AM ET (NYC) and Jimmy Kimmel Live at 3:15 PM PT (LA)
+
+Since you're in New York City, The View would be your most convenient option this week if you want to attend a show taping.
+```
+
+### Example 4: Location-Specific Search
+**User Query:** "Which late night shows are available next Monday in Los Angeles?"
+
+**Response:**
+```
+Looking at next Monday, July 14, 2025 in Los Angeles, here are the available late-night shows:
+
+Monday, July 14th in Los Angeles:
+- Jimmy Kimmel Live at 3:15 PM PT
+
+That's the only late-night show option available in Los Angeles for next Monday.
+
+If you're willing to consider New York City shows for that same day, there are also:
+- Late Night with Seth Meyers at 2:00 PM ET
+- The Tonight Show Starring Jimmy Fallon at 3:45 PM ET
+
+But if you specifically want to stay in Los Angeles, Jimmy Kimmel Live would be your only option for next Monday.
+```
+
+### Example 5: Calendar Integration
+**User Query:** "Add The Daily Show on July 15th at 4:30 PM ET to my calendar"
+
+**Response:**
+```
+Successfully created calendar event for The Daily Show on July 15, 2025 at 4:30 PM ET.
+
+Calendar Event Details:
+- Event: The Daily Show
+- Date: Tuesday, July 15, 2025
+- Time: 4:30 PM ET - 5:30 PM ET
+- Location: New York City, NY
+- Description: Attending The Daily Show taping with check-in reminder
+
+The iCal data has been generated and can be imported into your calendar application. The event includes a reminder to arrive early for check-in.
 ```
 
 ## Error Handling

@@ -32,3 +32,13 @@ export const showGuestScheduleSchema: z.ZodType<ShowGuestSchedule> = z.object({
     show: z.string().describe("The name of the late night show (e.g., 'The Tonight Show')."),
     entries: z.array(showGuestEntrySchema).describe("An array of dated guest entries for the show."),
 });
+
+// Schema for calendar event output
+export const calendarEventSchema = z.object({
+  summary: z.string().describe("The event title/summary."),
+  description: z.string().describe("The event description with details."),
+  location: z.string().describe("The event location."),
+  startTime: z.string().describe("The event start time in ISO 8601 format."),
+  endTime: z.string().describe("The event end time in ISO 8601 format."),
+  iCalData: z.string().describe("The complete iCal format data for the event."),
+});
