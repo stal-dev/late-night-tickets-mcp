@@ -1,0 +1,33 @@
+{
+  "name": "late-night-tickets-mcp",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc && chmod 755 build/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.13.2",
+    "axios": "^1.7.9",
+    "cheerio": "^1.0.0-rc.12",
+    "puppeteer": "^23.10.4",
+    "zod": "^3.25.67"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.4",
+    "ts-node": "^10.9.2",
+    "tslib": "^2.8.1",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  },
+  "type": "module",
+  "bin": {
+    "weather": "./build/index.js"
+  },
+  "files": [
+    "build"
+  ]
+}
